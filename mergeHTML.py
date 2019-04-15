@@ -4,13 +4,9 @@ import sys
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        fileName = sys.argv[1]
-    else:
-        fileName = input('Enter the name of the html file\n')
+# mergeHTML  Copyright (C) 2019  Carles Salles Baro
 
-    html_doc = open(fileName, "r")
+def mergeFiles(html_doc):
     soup = BeautifulSoup(html_doc, 'html.parser')
     html_doc.close()
 
@@ -41,5 +37,18 @@ if __name__ == "__main__":
             imgSoup = BeautifulSoup(imgContent, 'html.parser')
             img.replace_with(imgSoup)
 
-f = open("out.html","w+")
-f.write(soup.prettify())
+    f = open("out.html","w+")
+    f.write(soup.prettify())
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        fileName = sys.argv[1]
+    else:
+        fileName = input('Enter the name of the html file\n')
+
+    try:
+        html_doc = open(fileName, "r")
+    except:
+        print('File not found\n')
+    else:
+        mergeFiles(html_doc)
